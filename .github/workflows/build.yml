@@ -1,0 +1,25 @@
+name: Build PS2 Haunted House
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ps2dev/ps2dev:latest
+    steps:
+      - os: checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apk add --no-cache git make gcc
+
+      - name: Compile ELF
+        run: |
+          # Questo comando compila il loader e integra lo script lua
+          make
+
+      - name: Upload ELF
+        uses: actions/upload-artifact@v3
+        with:
+          name: HauntedHouse-PS2
+          path: HauntedHouse.elf
