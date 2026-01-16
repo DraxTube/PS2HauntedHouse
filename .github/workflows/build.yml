@@ -10,9 +10,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install Dependencies and Lua
         run: |
           apk add --no-cache git make gcc
+          # Scarica e installa Lua per PS2
+          git clone https://github.com/ps2dev/ps2sdk-ports.git
+          cd ps2sdk-ports/lua
+          make -j$(nproc)
+          make install
+          cd ../..
 
       - name: Compile ELF
         run: |
