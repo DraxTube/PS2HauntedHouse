@@ -7,7 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     container: ps2dev/ps2dev:latest
     steps:
-      - os: checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
@@ -15,7 +16,6 @@ jobs:
 
       - name: Compile ELF
         run: |
-          # Questo comando compila il loader e integra lo script lua
           make
 
       - name: Upload ELF
